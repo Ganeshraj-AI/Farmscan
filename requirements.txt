@@ -1,8 +1,8 @@
-Flask==3.0.0
-Pillow==10.2.0
-numpy==1.26.4
-opencv-python-headless==4.9.0.80
-feedparser==6.0.11
-Werkzeug==3.0.1
-reportlab==4.1.0
-gunicorn==21.2.0
+Flask
+Pillow
+numpy
+opencv-python-headless
+feedparser
+Werkzeug
+reportlab
+gunicorn
