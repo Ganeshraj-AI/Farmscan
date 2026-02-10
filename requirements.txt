@@ -1,8 +1,8 @@
 Flask==3.0.0
-Pillow==10.0.0
-numpy==1.24.3
-opencv-python-headless==4.8.0.74
-feedparser==6.0.10
+Pillow==10.2.0
+numpy==1.26.4
+opencv-python-headless==4.9.0.80
+feedparser==6.0.11
 Werkzeug==3.0.1
-reportlab==4.0.4
+reportlab==4.1.0
 gunicorn==21.2.0
