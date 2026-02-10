@@ -1,7 +1,5 @@
 Flask
 Pillow
-numpy
-opencv-python-headless
 feedparser
 Werkzeug
 reportlab
