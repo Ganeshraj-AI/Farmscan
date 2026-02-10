@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FasalDrishti AI - Register</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Public+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Public Sans"', 'sans-serif'],
+                        display: ['"Archivo Black"', 'sans-serif'],
+                    },
+                    colors: {
+                        neo: {
+                            green: '#00D664', // Signature Green
+                            black: '#121212',
+                            white: '#FFFFFF',
+                            alert: '#FF4D4D'
+                        }
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px #121212',
+                        'hard-hover': '2px 2px 0px 0px #121212',
+                    },
+                    borderWidth: {
+                        '3': '3px',
+                    },
+                    animation: {
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #F3F4F6;
+            color: #121212;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .neo-input:focus {
+            background-color: #E8FDF5;
+            outline: none;
+            box-shadow: 4px 4px 0px 0px #121212;
+            transform: translate(-2px, -2px);
+        }
+
+        /* Custom Select Styling */
+        select.neo-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23121212' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 1rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+        
+        .neo-transition { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-[100dvh] w-full flex flex-col items-center justify-center relative bg-white/90 backdrop-blur-sm py-10">
+
+    <div id="toast" class="fixed top-4 left-4 right-4 z-50 transform -translate-y-[150%] transition-transform duration-300">
+        <div class="bg-neo-black border-l-8 border-neo-alert p-4 shadow-hard flex items-center gap-3 text-white">
+            <i data-lucide="triangle-alert" class="w-6 h-6 stroke-[3] text-neo-alert"></i>
+            <span id="toast-msg" class="font-bold uppercase tracking-wide text-sm leading-tight">Error Message</span>
+        </div>
+    </div>
+
+    <main class="w-full max-w-sm px-6 z-10">
+        
+        <div class="mb-8 animate-fade-in-up">
+            <h1 class="font-display text-4xl uppercase leading-none tracking-tighter text-neo-black mb-2">
+                Join<br><span class="text-neo-green">FasalDrishti</span>
+            </h1>
+            <p class="font-bold text-xs text-gray-500 uppercase tracking-widest border-l-4 border-neo-black pl-3 ml-1">
+                New Farmer Registration
+            </p>
+        </div>
+
+        <form id="registerForm" class="space-y-5" onsubmit="return false;">
+            
+            <div class="group">
+                <label class="block font-black text-[10px] uppercase tracking-widest mb-1 ml-1 group-focus-within:text-neo-green transition-colors">Full Name</label>
+                <input type="text" id="fullname" 
+                    class="neo-input w-full bg-white border-3 border-neo-black p-3.5 font-bold text-base placeholder-gray-300 rounded-none neo-transition text-neo-black" 
+                    placeholder="e.g. Rajesh Kumar">
+            </div>
+
+            <div class="group">
+                <label class="block font-black text-[10px] uppercase tracking-widest mb-1 ml-1 group-focus-within:text-neo-green transition-colors">Phone Number</label>
+                <div class="relative">
+                    <input type="tel" id="phone" 
+                        class="neo-input w-full bg-white border-3 border-neo-black p-3.5 pl-4 font-bold text-base placeholder-gray-300 rounded-none neo-transition text-neo-black" 
+                        placeholder="98765 43210" maxlength="10">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                        <i data-lucide="smartphone" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block font-black text-[10px] uppercase tracking-widest mb-1 ml-1 group-focus-within:text-neo-green transition-colors">Village / Location</label>
+                <div class="relative">
+                    <input type="text" id="location" 
+                        class="neo-input w-full bg-white border-3 border-neo-black p-3.5 pl-4 font-bold text-base placeholder-gray-300 rounded-none neo-transition text-neo-black" 
+                        placeholder="e.g. Rampur, UP">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block font-black text-[10px] uppercase tracking-widest mb-1 ml-1 group-focus-within:text-neo-green transition-colors">Main Crop Type</label>
+                <select id="crop" class="neo-input w-full bg-white border-3 border-neo-black p-3.5 font-bold text-base text-neo-black rounded-none neo-transition cursor-pointer">
+                    <option value="" disabled selected>Select Crop</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Rice">Rice (Paddy)</option>
+                    <option value="Cotton">Cotton</option>
+                    <option value="Sugarcane">Sugarcane</option>
+                    <option value="Potato">Potato</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="group">
+                <label class="block font-black text-[10px] uppercase tracking-widest mb-1 ml-1 group-focus-within:text-neo-green transition-colors">Create Password</label>
+                <div class="relative">
+                    <input type="password" id="password" 
+                        class="neo-input w-full bg-white border-3 border-neo-black p-3.5 pl-4 font-bold text-base placeholder-gray-300 rounded-none neo-transition" 
+                        placeholder="••••••">
+                    <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 hover:text-neo-green transition-colors p-2">
+                        <i data-lucide="eye" id="eyeIcon" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="handleRegister()" id="submitBtn" class="w-full bg-neo-black text-white border-3 border-neo-black p-4 shadow-hard neo-transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none group relative overflow-hidden mt-6">
+                <span id="btnText" class="relative z-10 font-display text-lg tracking-wide uppercase group-hover:text-neo-green transition-colors">Register as New Farmer</span>
+                <div id="btnLoader" class="hidden absolute inset-0 flex items-center justify-center bg-neo-black z-20">
+                    <i data-lucide="loader-2" class="w-6 h-6 animate-spin text-neo-green"></i>
+                </div>
+            </button>
+
+            <div class="text-center pt-2">
+                <p class="font-bold text-xs text-gray-500 uppercase tracking-wide">
+                    Already have an account? 
+                    <a href="/login" class="text-neo-black underline decoration-2 decoration-neo-green hover:bg-neo-green hover:text-white transition-colors px-1">Login here</a>
+                </p>
+            </div>
+
+        </form>
+    </main>
+
+    <script>
+lucide.createIcons();
+
+// Toggle password visibility
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.setAttribute('data-lucide', 'eye-off');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.setAttribute('data-lucide', 'eye');
+    }
+    lucide.createIcons();
+}
+
+// REGISTER → BACKEND
+async function handleRegister() {
+    const fullname = document.getElementById('fullname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!fullname || !phone || !password) {
+        showToast("All fields are required");
+        return;
+    }
+
+    document.getElementById('btnText').classList.add('hidden');
+    document.getElementById('btnLoader').classList.remove('hidden');
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: fullname,
+                phone: phone,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showToast(data.error || "Registration failed");
+            resetRegisterButton();
+            return;
+        }
+
+        // ✅ SUCCESS
+        window.location.href = '/home';
+
+    } catch (error) {
+        showToast("Server not reachable");
+        resetRegisterButton();
+    }
+}
+
+function resetRegisterButton() {
+    document.getElementById('btnText').classList.remove('hidden');
+    document.getElementById('btnLoader').classList.add('hidden');
+}
+
+// Toast
+let toastTimeout;
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    const msgEl = document.getElementById('toast-msg');
+
+    msgEl.innerText = message;
+    toast.classList.remove('-translate-y-[150%]');
+
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.add('-translate-y-[150%]');
+    }, 3000);
+}
+
+// Phone input mask
+document.getElementById('phone').addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+</script>
+
+</body>
+</html>

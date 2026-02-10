@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Home - FarmScan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 15px; padding: 30px; }
+        h1 { color: #2E7D32; text-align: center; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .card { background: #f5f5f5; padding: 30px; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); background: #e8f5e9; }
+        .card h3 { color: #2E7D32; margin-top: 10px; }
+        .logout { text-align: center; margin-top: 20px; }
+        .logout a { color: #D32F2F; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌾 Welcome to FarmScan</h1>
+        <div class="grid">
+            <div class="card" onclick="location.href='/scan'">
+                <div style="font-size: 3em;">📸</div>
+                <h3>Scan Crop</h3>
+                <p>Detect diseases</p>
+            </div>
+            <div class="card" onclick="location.href='/history'">
+                <div style="font-size: 3em;">📋</div>
+                <h3>History</h3>
+                <p>View past scans</p>
+            </div>
+            <div class="card" onclick="location.href='/chat'">
+                <div style="font-size: 3em;">💬</div>
+                <h3>Chat</h3>
+                <p>Get farming advice</p>
+            </div>
+            <div class="card" onclick="location.href='/news'">
+                <div style="font-size: 3em;">📰</div>
+                <h3>News</h3>
+                <p>Agriculture updates</p>
+            </div>
+        </div>
+        <div class="logout">
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </div>
+    <script>
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

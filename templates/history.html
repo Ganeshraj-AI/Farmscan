@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>History - FarmScan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 15px; padding: 30px; }
+        h1 { color: #2E7D32; text-align: center; margin-bottom: 30px; }
+        .nav { text-align: center; margin-bottom: 20px; }
+        .nav a { color: #2E7D32; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #2E7D32; color: white; }
+        .btn { padding: 8px 15px; background: #D32F2F; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #B71C1C; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="/home">🏠 Home</a>
+            <a href="/scan">📸 Scan</a>
+            <a href="/history">📋 History</a>
+            <a href="/chat">💬 Chat</a>
+            <a href="/news">📰 News</a>
+        </div>
+        <h1>📋 Scan History</h1>
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button class="btn" onclick="downloadHistoryPDF()">📄 Download Full History PDF</button>
+        </div>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Disease</th>
+                    <th>Confidence</th>
+                    <th>Severity</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        async function loadHistory() {
+            try {
+                const response = await fetch('/api/history');
+                const data = await response.json();
+                const tbody = document.getElementById('historyBody');
+                tbody.innerHTML = '';
+                
+                if (data.scans && data.scans.length > 0) {
+                    data.scans.forEach(scan => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td>${scan.date.substring(0, 16)}</td>
+                            <td>${scan.disease_name}</td>
+                            <td>${Math.round(scan.confidence * 100)}%</td>
+                            <td>${scan.severity}</td>
+                        `;
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No scans yet</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+        }
+        
+        async function downloadHistoryPDF() {
+            try {
+                const response = await fetch('/api/export-history-pdf');
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `farmscan_history_${new Date().getTime()}.pdf`;
+                a.click();
+                alert('✅ History PDF downloaded!');
+            } catch (error) {
+                alert('❌ Failed to download PDF');
+            }
+        }
+        
+        loadHistory();
+    </script>
+</body>
+</html>
