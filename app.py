@@ -13,25 +13,74 @@ from PIL import Image
 import io
 from functools import wraps
 
-# Import our modules with error handling
+# Import our modules with INDIVIDUAL error handling
+# This prevents one failing module from breaking everything
+
+# Database (CRITICAL - required)
 try:
     from database import init_db, create_user, verify_user, save_scan, get_user_scans, update_user_language, get_scan_by_id
-    from chatbot import get_chatbot_response
-    from news_api import get_agriculture_news
-    from pdf_generator import generate_scan_report_pdf, create_history_report_pdf
-    from local_model import analyze_crop_image_local
-    print("✅ All modules loaded successfully")
+    print("✅ Database module loaded")
 except Exception as e:
-    print(f"⚠️ Module import error: {e}")
-    # Create fallback functions
+    print(f"❌ CRITICAL: Database import failed: {e}")
+    raise  # Can't run without database
+
+# Image Analysis (CRITICAL - required)
+try:
+    from local_model import analyze_crop_image_local
+    print("✅ Image analysis module loaded")
+except Exception as e:
+    print(f"❌ ERROR: Image analysis import failed: {e}")
+    # Fallback function
     def analyze_crop_image_local(image, language='en'):
         return {
-            "diseaseName": "Demo Mode",
-            "confidence": 0.75,
+            "diseaseName": "System Error - Image Analysis Unavailable",
+            "confidence": 0.50,
             "severity": "Unknown",
-            "spreadRisk": "App is running in demo mode.",
-            "treatment": "Full features loading..."
+            "spreadRisk": "Image analysis module failed to load.",
+            "treatment": f"Technical error: {str(e)}. Please contact support.",
+            "organicTreatment": {
+                "title": "System Status",
+                "details": [
+                    "❌ Image analysis module failed to load",
+                    f"Error: {str(e)[:100]}",
+                    "✅ Other features may still work"
+                ]
+            },
+            "safetyWarning": "Technical issue detected. Please contact support."
         }
+
+# Chatbot (OPTIONAL - nice to have)
+try:
+    from chatbot import get_chatbot_response
+    print("✅ Chatbot module loaded")
+except Exception as e:
+    print(f"⚠️ WARNING: Chatbot import failed: {e}")
+    def get_chatbot_response(message, language='en'):
+        return "Chatbot is temporarily unavailable. Please try again later."
+
+# News (OPTIONAL - nice to have)
+try:
+    from news_api import get_agriculture_news
+    print("✅ News module loaded")
+except Exception as e:
+    print(f"⚠️ WARNING: News import failed: {e}")
+    def get_agriculture_news(category, language='en'):
+        return [{"title": "News temporarily unavailable", "source": "System", "time": "Now"}]
+
+# PDF Generator (OPTIONAL - nice to have)
+try:
+    from pdf_generator import generate_scan_report_pdf, create_history_report_pdf
+    print("✅ PDF generator module loaded")
+except Exception as e:
+    print(f"⚠️ WARNING: PDF generator import failed: {e}")
+    def generate_scan_report_pdf(scan_data, image, user_info):
+        from io import BytesIO
+        return BytesIO(b"PDF generation unavailable")
+    def create_history_report_pdf(scans, user_info):
+        from io import BytesIO
+        return BytesIO(b"PDF generation unavailable")
+
+print("🚀 All critical modules loaded successfully")
 
 
 
